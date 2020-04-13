@@ -1,5 +1,5 @@
 import {combineReducers} from "redux";
-import authorPanel from './containers/AuthorsList/reducers'
+import authorsList from './containers/AuthorsList/reducers'
 
 
-export default combineReducers({authorPanel})
+export default combineReducers({authorsList})

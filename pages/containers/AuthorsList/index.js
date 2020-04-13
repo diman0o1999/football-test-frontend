@@ -44,9 +44,9 @@ const AuthorsList = ({isLoading, authors, error, getAuthors}) => {
 }
 
 const mapStateToProps = state => ({
-    authors: state.authorPanel.authors,
-    error: state.authorPanel.error,
-    isLoading: state.authorPanel.isLoading,
+    authors: state.authorsList.authors,
+    error: state.authorsList.error,
+    isLoading: state.authorsList.isLoading,
 })
 
 const mapDispatchToProps = dispatch => ({

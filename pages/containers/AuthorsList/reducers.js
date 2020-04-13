@@ -7,7 +7,7 @@ const initialState = {
 export default (state=initialState, action) => {
     state.error = null
     switch (action.type) {
-        case 'GET_AUTHORS' || 'COUNT_POSTS':
+        case 'GET_AUTHORS':
             return {...state, isLoading: true}
         case 'GET_AUTHORS_SUCCESS':
             return {...state, authors: action.payload, isLoading: false}
