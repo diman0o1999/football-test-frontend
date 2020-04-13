@@ -1,0 +1,29 @@
+{
+  "name": "football",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "ag-grid-community": "^23.0.2",
+    "ag-grid-react": "^23.0.3",
+    "bootstrap": "^4.4.1",
+    "next": "^9.3.4",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.0",
+    "react-dom": "^16.13.1",
+    "redux": "^4.0.5",
+    "react-redux": "^7.2.0",
+    "redux-saga": "^1.1.3",
+    "jsonschema": "^1.2.6"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
