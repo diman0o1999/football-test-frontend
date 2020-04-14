@@ -24,12 +24,14 @@ export const fetchAuthors = async () => {
     const result = new Validator().validate(authors, AUTHORS_SCHEMA)
     if (!result.valid)
         throw new Error(authorsErrMsg)
-    for (const author of authors) {
-        const res = await fetch(`${BASE_URL}/users/${author.id}/posts`)
-        if (!res.ok)
-            throw new Error(`Couldn\'t fetch posts by author ID: ${author.id}`)
-        const posts = await res.json()
-        author.postsCount = posts.length
-    }
+    for (const author of authors)
+        author.posts = await fetchPostsByAuthorId(author.id)
     return authors
+}
+
+const fetchPostsByAuthorId = async (id) => {
+    const res = await fetch(`${BASE_URL}/users/${id}/posts`)
+    if (!res.ok)
+        throw new Error(`Couldn\'t fetch posts by author ID: ${id}`)
+    return await res.json()
 }
