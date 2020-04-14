@@ -1,0 +1,3 @@
+export const GET_POSTS = 'GET POSTS'
+export const GET_POSTS_SUCCESS = 'GET POSTS SUCCESS'
+export const GET_POSTS_FAILURE = 'GET POSTS FAILURE'

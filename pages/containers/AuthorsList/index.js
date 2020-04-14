@@ -1,10 +1,14 @@
-import {Button, Col, Container, ListGroup, Row} from "react-bootstrap";
+import {
+    Button,
+    Card,
+    CardColumns,
+} from "react-bootstrap";
 import {connect} from "react-redux";
 import React, {useEffect} from "react";
 import {clearAuthor, getAuthor, getAuthors} from "./actions";
 import CentralSpinner from '../../components/CentralSpinner'
 import ErrorPanel from '../../components/ErrorPanel'
-import PostsTable from '../../components/PostsTable'
+import PostsModal from '../../components/PostsModal'
 
 
 /**
@@ -18,7 +22,7 @@ import PostsTable from '../../components/PostsTable'
 const AuthorsList = ({isLoading, authors, author, error, dispatch}) => {
     useEffect(() => {
         dispatch(getAuthors())
-    }, []);
+    }, [])
 
     if (isLoading)
         return <CentralSpinner />
@@ -26,26 +30,27 @@ const AuthorsList = ({isLoading, authors, author, error, dispatch}) => {
     if (error)
         return <ErrorPanel text={error} />
 
-    const authorsListGroup = authors.map(author =>
-        <ListGroup.Item key={author.id}>
-            <Container fluid>
-                <Row>
-                    <Col className='my-auto'>{author.name}</Col>
-                    <Col className='text-right'>
-                        <Button variant='dark'
-                                onClick={() => dispatch(getAuthor(author.id))}>
-                            Статей: {author.posts.length}
-                        </Button>
-                    </Col>
-                </Row>
-            </Container>
-        </ListGroup.Item>)
+    const authorsGroup = authors.map(author =>
+        <Card key={author.id} >
+            <Card.Body>
+                <Card.Title>{author.name}</Card.Title>
+                <Card.Body>
+                    <Button variant='dark'
+                            onClick={() => dispatch(getAuthor(author.id))}>
+                        Статей: {author.posts.length}
+                    </Button>
+                </Card.Body>
+            </Card.Body>
+        </Card>
+    )
     return (
         <>
-            {author && <PostsTable author={author} clearAuthor={() => dispatch(clearAuthor())} />}
-            <ListGroup style={{width: 40 + '%'}}>
-                {authorsListGroup}
-            </ListGroup>
+            {author && <PostsModal author={author} clearAuthor={() => dispatch(clearAuthor())} />}
+            <div className='text-center'>
+                <CardColumns>
+                    {authorsGroup}
+                </CardColumns>
+            </div>
         </>
     )
 }

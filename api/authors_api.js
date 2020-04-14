@@ -1,7 +1,7 @@
 import Validator from 'jsonschema/lib/validator';
+import constants from "../constants";
 
 
-const BASE_URL = 'https://jsonplaceholder.typicode.com'
 const AUTHORS_SCHEMA = {
     id: '/Author',
     type: 'array',
@@ -17,7 +17,7 @@ const AUTHORS_SCHEMA = {
 
 export const fetchAuthors = async () => {
     const authorsErrMsg = 'Couldn\'t fetch authors'
-    const res = await fetch(`${BASE_URL}/users`)
+    const res = await fetch(`${constants.BASE_URL}/users`)
     if (!res.ok)
         throw new Error(authorsErrMsg)
     const authors = await res.json()
@@ -29,8 +29,15 @@ export const fetchAuthors = async () => {
     return authors
 }
 
+export const fetchAuthor = async id => {
+    const res = await fetch(`${constants.BASE_URL}/users/${id}`)
+    if (!res.ok)
+        throw new Error(`Couldn\'t fetch author with ID=${id}`)
+    return await res.json()
+}
+
 const fetchPostsByAuthorId = async (id) => {
-    const res = await fetch(`${BASE_URL}/users/${id}/posts`)
+    const res = await fetch(`${constants.BASE_URL}/users/${id}/posts`)
     if (!res.ok)
         throw new Error(`Couldn\'t fetch posts by author ID: ${id}`)
     return await res.json()
