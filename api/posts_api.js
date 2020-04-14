@@ -1,12 +1,10 @@
+import axios from 'axios';
 import constants from "../constants";
 import {fetchAuthor} from "./authors_api";
 
 
 export const fetchPosts = async () => {
-    const res = await fetch(`${constants.BASE_URL}/posts`)
-    if (!res.ok)
-        throw new Error('Couldn\'t fetch posts')
-    const posts = await res.json()
+    const posts = (await axios.get(`${constants.BASE_URL}/posts`)).data
     for (const post of posts)
         post.author = await fetchAuthor(post.userId)
     return posts

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Validator from 'jsonschema/lib/validator';
 import constants from "../constants";
 
@@ -17,10 +18,7 @@ const AUTHORS_SCHEMA = {
 
 export const fetchAuthors = async () => {
     const authorsErrMsg = 'Couldn\'t fetch authors'
-    const res = await fetch(`${constants.BASE_URL}/users`)
-    if (!res.ok)
-        throw new Error(authorsErrMsg)
-    const authors = await res.json()
+    const authors = (await axios.get(`${constants.BASE_URL}/users`)).data
     const result = new Validator().validate(authors, AUTHORS_SCHEMA)
     if (!result.valid)
         throw new Error(authorsErrMsg)
@@ -30,15 +28,11 @@ export const fetchAuthors = async () => {
 }
 
 export const fetchAuthor = async id => {
-    const res = await fetch(`${constants.BASE_URL}/users/${id}`)
-    if (!res.ok)
-        throw new Error(`Couldn\'t fetch author with ID=${id}`)
-    return await res.json()
+    const res = await axios.get(`${constants.BASE_URL}/users/${id}`)
+    return res.data
 }
 
 const fetchPostsByAuthorId = async (id) => {
-    const res = await fetch(`${constants.BASE_URL}/users/${id}/posts`)
-    if (!res.ok)
-        throw new Error(`Couldn\'t fetch posts by author ID: ${id}`)
-    return await res.json()
+    const res = await axios.get(`${constants.BASE_URL}/users/${id}/posts`)
+    return res.data
 }
