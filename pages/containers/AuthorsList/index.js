@@ -7,8 +7,8 @@ import {connect} from "react-redux";
 import React, {useEffect} from "react";
 import {clearAuthor, getAuthor, getAuthors} from "./actions";
 import CentralSpinner from '../../components/CentralSpinner'
-import ErrorPanel from '../../components/ErrorPanel'
 import PostsModal from '../../components/PostsModal'
+import withErrorCheck from '../../components/withErrorCheck'
 
 
 /**
@@ -19,16 +19,13 @@ import PostsModal from '../../components/PostsModal'
  * @param error
  * @param dispatch
  */
-const AuthorsList = ({isLoading, authors, author, error, dispatch}) => {
+const AuthorsList = ({isLoading, authors, author, dispatch}) => {
     useEffect(() => {
         dispatch(getAuthors())
     }, [])
 
     if (isLoading)
         return <CentralSpinner />
-
-    if (error)
-        return <ErrorPanel text={error} />
 
     const authorsGroup = authors.map(author =>
         <Card key={author.id} >
@@ -58,8 +55,7 @@ const AuthorsList = ({isLoading, authors, author, error, dispatch}) => {
 const mapStateToProps = state => ({
     authors: state.authorsList.authors,
     author: state.authorsList.authorDetail,
-    error: state.authorsList.error,
     isLoading: state.authorsList.isLoading,
 })
 
-export default connect(mapStateToProps)(AuthorsList)
+export default connect(mapStateToProps)(withErrorCheck(AuthorsList))

@@ -3,6 +3,7 @@ import {AgGridReact} from "ag-grid-react";
 import React, {useEffect} from "react";
 import CentralSpinner from "../../components/CentralSpinner";
 import {getPosts} from "./actions";
+import withErrorCheck from '../../components/withErrorCheck'
 
 
 /**
@@ -50,7 +51,7 @@ const PostsTable = ({posts, isLoading, dispatch}) => {
 
 const mapStateToProps = state => ({
     posts: state.postsTable.posts,
-    isLoading: state.postsTable.isLoading
+    isLoading: state.postsTable.isLoading,
 })
 
-export default connect(mapStateToProps)(PostsTable)
+export default connect(mapStateToProps)(withErrorCheck(PostsTable))

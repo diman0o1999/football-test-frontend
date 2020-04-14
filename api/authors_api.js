@@ -4,7 +4,7 @@ import constants from "../constants";
 
 
 const AUTHORS_SCHEMA = {
-    id: '/Author',
+    id: '/Authors',
     type: 'array',
     items: {
         type: 'object',
