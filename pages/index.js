@@ -1,11 +1,11 @@
-import React, {useEffect} from "react"
-import Router from 'next/router'
+import React from "react";
+
+import AuthorsList from "../components/react/containers/AuthorsList";
+import Layout from '../components/react/components/Layout'
 
 
-export default () => {
-    useEffect(() => {
-        Router.push('/authors')
-    }, [])
-
-    return null
-}
+export default () => (
+  <Layout>
+    <AuthorsList />
+  </Layout>
+)

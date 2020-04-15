@@ -1,6 +1,7 @@
 import React from "react";
-import AuthorsList from "./containers/AuthorsList";
-import Layout from './components/Layout'
+
+import AuthorsList from "../components/react/containers/AuthorsList";
+import Layout from '../components/react/components/Layout'
 
 
 export default () => (

@@ -1,7 +1,9 @@
 import axios from 'axios';
+
 import constants from "../constants";
-import {fetchAuthor, validateAuthor} from "./authors_api";
 import {validateArray} from "../utils/validation_util";
+
+import {fetchAuthor, validateAuthor} from "./authors_api";
 import {POST_SCHEMA} from "./schemas";
 
 

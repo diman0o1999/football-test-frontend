@@ -1,0 +1,44 @@
+{
+ "extends": ["airbnb-base", "plugin:react/recommended", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+        "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest": true,
+  },
+  "plugins": ["react"],
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "local",
+        "args": "none"
+      }
+    ],
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": ["error", { "functions": false, "classes": true, "variables": false }], # disable the rule for variables and functions, but enable it for classes
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          ["external", "internal"],
+          "parent",
+          ["sibling", "index"],
+        ],
+        "newlines-between": "always"
+      }
+    ],
+    "react/no-unescaped-entities": 0,
+    "camelcase": "warn",
+    "no-restricted-imports": [ ]
+  }
+}
