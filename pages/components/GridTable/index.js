@@ -12,14 +12,17 @@ export default ({columnDefs, rowData}) => {
     const defaultColDef = {
         flex: 1,
         cellStyle: styles.cell,
-        autoHeight: true,
         resizable: true,
     }
 
+    const getRawHeight = (params) =>
+        params.api.getSizesForCurrentTheme().rowHeight
+
     return (
-        <div className='ag-theme-bootstrap'>
+        <div className='ag-theme-material'>
             <AgGridReact
                 domLayout='autoHeight'
+                getRowHeight={getRawHeight}
                 defaultColDef={defaultColDef}
                 columnDefs={columnDefs}
                 rowData={rowData}>
