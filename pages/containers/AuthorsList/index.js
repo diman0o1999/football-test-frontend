@@ -1,13 +1,13 @@
 import {
     Button,
     Card,
-    CardColumns,
+    CardColumns, Modal,
 } from "react-bootstrap";
 import {connect} from "react-redux";
 import React, {useEffect} from "react";
 import {clearAuthor, getAuthor, getAuthors} from "./actions";
 import CentralSpinner from '../../components/CentralSpinner'
-import PostsModal from '../../components/PostsModal'
+import GridTable from '../../components/GridTable'
 import withErrorCheck from '../../components/withErrorCheck'
 
 
@@ -40,9 +40,26 @@ const AuthorsList = ({isLoading, authors, author, dispatch}) => {
             </Card.Body>
         </Card>
     )
+
+    const columnDefs = [
+        { headerName: "Название", field: "title" },
+        { headerName: 'Текст', field: 'body', resizable: true  }
+    ]
     return (
         <>
-            {author && <PostsModal author={author} clearAuthor={() => dispatch(clearAuthor())} />}
+            {author &&
+                <Modal size='lg'
+                       show
+                       centered
+                       onHide={() => dispatch(clearAuthor())}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Статьи {author.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <GridTable columnDefs={columnDefs} rowData={author.posts} />
+                    </Modal.Body>
+                </Modal>
+            }
             <div className='text-center'>
                 <CardColumns>
                     {authorsGroup}
