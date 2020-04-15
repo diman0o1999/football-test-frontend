@@ -1,39 +1,33 @@
 import axios from 'axios';
-import Validator from 'jsonschema/lib/validator';
 import constants from "../constants";
+import {AUTHOR_SCHEMA} from "./schemas";
+import {validate, validateArray} from "../utils/validation_util";
+import {validatePosts} from "./posts_api";
 
-
-const AUTHORS_SCHEMA = {
-    id: '/Authors',
-    type: 'array',
-    items: {
-        type: 'object',
-        properties: {
-            id: {type: 'integer'},
-            name: {type: 'string'},
-        },
-        required: ['id', 'name']
-    }
-}
 
 export const fetchAuthors = async () => {
-    const authorsErrMsg = 'Couldn\'t fetch authors'
     const authors = (await axios.get(`${constants.BASE_URL}/users`)).data
-    const result = new Validator().validate(authors, AUTHORS_SCHEMA)
-    if (!result.valid)
-        throw new Error(authorsErrMsg)
+    validateArray(authors, AUTHOR_SCHEMA, 'Couldn\'t fetch authors.')
+
     await Promise.all(authors.map(async author => {
-        author.posts = await fetchPostsByAuthorId(author.id)
+        const posts = await fetchPostsByAuthorId(author.id)
+        validatePosts(posts)
+        author.posts = posts
     }))
     return authors
 }
 
 export const fetchAuthor = async id => {
     const res = await axios.get(`${constants.BASE_URL}/users/${id}`)
+    validateAuthor(res.data)
     return res.data
 }
 
+export const validateAuthor = (author) =>
+    validate(author, AUTHOR_SCHEMA, 'Couldn\t fetch author')
+
 const fetchPostsByAuthorId = async (id) => {
     const res = await axios.get(`${constants.BASE_URL}/users/${id}/posts`)
+    validatePosts(res.data)
     return res.data
 }
