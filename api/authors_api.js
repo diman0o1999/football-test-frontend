@@ -22,8 +22,9 @@ export const fetchAuthors = async () => {
     const result = new Validator().validate(authors, AUTHORS_SCHEMA)
     if (!result.valid)
         throw new Error(authorsErrMsg)
-    for (const author of authors)
+    await Promise.all(authors.map(async author => {
         author.posts = await fetchPostsByAuthorId(author.id)
+    }))
     return authors
 }
 

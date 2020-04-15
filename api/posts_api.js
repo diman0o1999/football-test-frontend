@@ -24,7 +24,8 @@ export const fetchPosts = async () => {
     const result = new Validator().validate([], POSTS_SCHEMA)
     if (!result.valid)
         throw new Error('Couldn\'t fetch posts. ' + result.errors)
-    for (const post of posts)
+    await Promise.all(posts.map(async post => {
         post.author = await fetchAuthor(post.userId)
+    }))
     return posts
 }
